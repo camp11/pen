@@ -9,7 +9,7 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 client = LineClient()
-client._qrLogin("line://au/q/Fsbzl1aLAzEt5YL6fWOBe8IjPoM6XUiR")
+client._qrLogin("Emc00n3jDlRGqeZBfYaf.v/NiB+r0RVILsLVy0GdqNW.gcVOJciqKzOTm96f9iXy+0N2TzKgsyN8f+VMU+T0a3Q=")
 
 profile, setting, tracer = client.getProfile(), client.getSettings(), LineTracer(client)
 offbot, messageReq, wordsArray, waitingAnswer = [], {}, {}, {}
@@ -50,7 +50,7 @@ tracer.addOpInterrupt(5,NOTIFIED_ADD_CONTACT)
 def NOTIFIED_ACCEPT_GROUP_INVITATION(op):
     #print op
     try:
-        sendMessage(op.param1, client.getContact(op.param2).displayName + "salken kk, WELCOME to ROOM FIS MINI EVENT,silahkan cek note ya")
+        sendMessage(op.param1, "hai WELCOME")
     except Exception as e:
         print e
         print ("\n\nNOTIFIED_ACCEPT_GROUP_INVITATION\n\n")
