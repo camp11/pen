@@ -16,6 +16,8 @@ offbot, messageReq, wordsArray, waitingAnswer = [], {}, {}, {}
 
 print client._loginresult()
 
+Bots=[mid,Amid,Bmid,Cmid]
+admin=[""]
 wait = {
     'readPoint':{},
     'readMember':{},
@@ -154,8 +156,10 @@ def SEND_MESSAGE(op):
                     client.updateGroup(group)
                     sendMessage(msg.to,"Group Name"+key+"Canged to")
                 if msg.text == "url":
+		    if msg.from_ in admin:
                     sendMessage(msg.to,"line://ti/g/" + client._client.reissueGroupTicket(msg.to))
                 if msg.text == "open":
+		    if msg.from_ in admin:
                     group = client.getGroup(msg.to)
                     if group.preventJoinByTicket == False:
                         sendMessage(msg.to, "already open")
@@ -164,6 +168,7 @@ def SEND_MESSAGE(op):
                         client.updateGroup(group)
                         sendMessage(msg.to, "URL Open")
                 if msg.text == "close":
+		    if msg.from_ in admin:
                     group = client.getGroup(msg.to)
                     if group.preventJoinByTicket == True:
                         sendMessage(msg.to, "already close")
@@ -172,11 +177,13 @@ def SEND_MESSAGE(op):
                         client.updateGroup(group)
                         sendMessage(msg.to, "URL close")
                 if "kick:" in msg.text:
+		    if msg.from_ in admin:
                     key = msg.text[5:]
                     client.kickoutFromGroup(msg.to, [key])
                     contact = client.getContact(key)
                     sendMessage(msg.to, ""+contact.displayName+"sorry")
                 if "nk:" in msg.text:
+		    if msg.from_ in admin:
                     key = msg.text[3:]
                     group = client.getGroup(msg.to)
                     Names = [contact.displayName for contact in group.members]
@@ -198,6 +205,7 @@ def SEND_MESSAGE(op):
                         client.cancelGroupInvitation(msg.to, gInviMids)
                         sendMessage(msg.to, str(len(group.invitee)) + " Done")
                 if "invite:" in msg.text:
+		    if msg.from_ in admin:
                     key = msg.text[-33:]
                     client.findAndAddContactsByMid(key)
                     client.inviteIntoGroup(msg.to, [key])
@@ -247,7 +255,29 @@ def SEND_MESSAGE(op):
                     pass
         else:
             pass
-
+                if msg.text == "Hai all":
+		if msg.from_ in admin:
+		    group = client.getGroup(msg.to)
+		    nama = [contact.mid for contact in group.members]
+		    cb = ""
+		    cb2 = ""
+		    strt = int(0)
+		    akh = int(0)
+		    for md in nama:
+			akh = akh + int(5)	
+			cb += """{"S":"""+json.dumps(str(strt))+""","E":"""+json.dumps(str(akh))+""","M":"""+json.dumps(md)+"},"""
+			strt = strt + int(6)
+			akh = akh + 1
+			cb2 += "@nrik\n"
+		   
+		    cb = (cb[:int(len(cb)-1)])
+		    msg.contentType = 0
+		    msg.text = cb2
+		    msg.contentMetadata ={'MENTION':'{"MENTIONEES":['+cb+']}','EMTVER':'4'}
+		    try:
+		        client.sendMessage(msg)
+		    except Exception as error:
+			    print error	
     except Exception as e:
         print e
         print ("\n\nSEND_MESSAGE\n\n")
