@@ -17,7 +17,7 @@ offbot, messageReq, wordsArray, waitingAnswer = [], {}, {}, {}
 print client._loginresult()
 
 Bots=[mid,Amid,Bmid,Cmid]
-admin=[""]
+admin=["u4446c43d5a0586a7d0167db9514ffb3c"]
 wait = {
     'readPoint':{},
     'readMember':{},
